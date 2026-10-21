@@ -41,5 +41,5 @@ document.addEventListener("submit", function (event) {
     task.querySelector(".task-due").appendChild(overdue);
   }
 
-  fetch(form.action);
+  fetch(form.action, { method: form.method, body: new FormData(form) });
 });
