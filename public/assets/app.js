@@ -31,5 +31,15 @@ document.addEventListener("submit", function (event) {
     status.remove();
   }
 
+  var overdue = task.querySelector(".task-overdue");
+  if (completed && overdue) {
+    overdue.remove();
+  } else if (!completed && task.dataset.pastDue === "true" && !overdue) {
+    overdue = document.createElement("span");
+    overdue.className = "task-overdue";
+    overdue.textContent = "Vencida";
+    task.querySelector(".task-due").appendChild(overdue);
+  }
+
   fetch(form.action);
 });

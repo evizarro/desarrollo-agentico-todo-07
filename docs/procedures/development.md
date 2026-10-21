@@ -80,7 +80,7 @@ npx playwright test
 npx playwright test e2e/tareas/anadir-una-tarea.spec.ts
 ```
 
-Playwright arranca la aplicación con `GO_ENV=test` en `127.0.0.1:3001` (otro puerto con `E2E_PORT`), contra `todo_test` (en `DB_PORT`), y la para al terminar. Cada test empieza con la lista vacía y crea las tareas que necesita con la fixture `tasks` de `e2e/fixtures.ts`. Si un test falla, el informe queda en `playwright-report/` y la traza en `test-results/`.
+Playwright arranca la aplicación con `GO_ENV=test` en `127.0.0.1:3001` (otro puerto con `E2E_PORT`), contra `todo_test` (en `DB_PORT`), y la para al terminar. Cada test empieza con la lista vacía y crea las tareas que necesita con la fixture `tasks` de `e2e/fixtures.ts`, que admite `dueDate` (por defecto, hoy). `e2e/fixtures.ts` exporta también `day(n)`, el día de hoy más `n` días en `AAAA-MM-DD`, para las fechas relativas. Si un test falla, el informe queda en `playwright-report/` y la traza en `test-results/`.
 
 ## Gates
 

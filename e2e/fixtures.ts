@@ -3,7 +3,16 @@ import pg from 'pg';
 
 export { expect };
 
-type Task = { title: string; completed?: boolean };
+type Task = { title: string; completed?: boolean; dueDate?: string };
+
+// El día local de esta máquina más `offset` días, en AAAA-MM-DD. La aplicación arranca en la
+// misma máquina, así que coincide con su «hoy».
+export function day(offset: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
 
 type Fixtures = {
   // Deja la tabla con exactamente estas tareas, en este orden de creación.
@@ -32,9 +41,9 @@ export const test = base.extend<Fixtures>({
       await db.query('DELETE FROM tasks');
       for (const [i, task] of tasks.entries()) {
         await db.query(
-          `INSERT INTO tasks (id, title, completed, created_at, updated_at)
-           VALUES (gen_random_uuid(), $1, $2, now() + $3 * interval '1 millisecond', now())`,
-          [task.title, task.completed ?? false, i],
+          `INSERT INTO tasks (id, title, completed, due_date, created_at, updated_at)
+           VALUES (gen_random_uuid(), $1, $2, $4::date, now() + $3 * interval '1 millisecond', now())`,
+          [task.title, task.completed ?? false, i, task.dueDate ?? day(0)],
         );
       }
     });
