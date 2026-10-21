@@ -31,3 +31,7 @@ Una sección por pregunta.
 Entre una y tres condiciones por fichero, y las entradas en orden por número de issue.
 
 ## Índice
+
+- [feature-1-anadir-fechas-limite-a-las-tareas.md](feature-1-anadir-fechas-limite-a-las-tareas.md): fecha al crear y editar, obligatoria, pasada solo rechazada al crear, «Vencida» sin reordenar la lista
+  - Cuando se cambie quién puede fijar la fecha límite o si es opcional
+  - Cuando se cambie el orden de la lista de tareas o la marca de vencida
