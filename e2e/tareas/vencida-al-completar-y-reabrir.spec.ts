@@ -17,12 +17,16 @@ test.describe('Tareas', () => {
     await expect(row.getByText('Vencida')).toBeVisible();
 
     // 2. Al completarla, sin recargar, deja de estar vencida
+    const completed = page.waitForResponse((r) => /\/toggle$/.test(r.url()));
     await page.getByRole('button', { name: 'Completar tarea: Pagar la factura' }).click();
     await expect(row.getByText('Vencida')).toHaveCount(0);
+    await completed;
 
     // 3. Al reabrirla, sin recargar, vuelve a estarlo
+    const reopened = page.waitForResponse((r) => /\/toggle$/.test(r.url()));
     await page.getByRole('button', { name: 'Reabrir tarea: Pagar la factura' }).click();
     await expect(row.getByText('Vencida')).toBeVisible();
+    await reopened;
 
     // 4. Tras recargar sigue marcada
     await page.reload();
