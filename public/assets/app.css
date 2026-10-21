@@ -129,12 +129,34 @@ h1 {
   border-bottom: 1px solid var(--color-border);
 }
 
-.task-title {
+.task-main {
   align-self: center;
   min-width: 0;
   padding: 0.65rem 0;
+}
+
+.task-title {
+  display: block;
+  min-width: 0;
   overflow-wrap: anywhere;
   line-height: 1.55;
+}
+
+.task-due {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.task-overdue {
+  padding: 0.05rem 0.45rem;
+  border-radius: 4px;
+  color: var(--color-danger);
+  background: #fcf0ec;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .task-toggle-button,
@@ -245,7 +267,8 @@ h1 {
   line-height: 1;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"] {
   width: 100%;
   min-width: 0;
   min-height: 44px;
@@ -257,8 +280,13 @@ input[type="text"] {
   border-radius: 6px;
 }
 
-.new-task-row input {
+.new-task-row input[type="text"] {
   flex: 1;
+}
+
+.new-task-row input[type="date"] {
+  flex: 0 0 auto;
+  width: auto;
 }
 
 input::placeholder {
@@ -369,6 +397,11 @@ input:focus-visible {
   font-weight: 600;
 }
 
+.edit-task .field-hint + label,
+.edit-task .field-error + label {
+  margin-top: 1.25rem;
+}
+
 .edit-task-actions {
   display: flex;
   flex-wrap: wrap;
@@ -464,7 +497,7 @@ input:focus-visible {
     flex-wrap: wrap;
   }
 
-  .new-task-row input {
+  .new-task-row input[type="text"] {
     flex-basis: calc(100% - 44px);
   }
 

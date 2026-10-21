@@ -18,3 +18,9 @@ Un documento de cierre cuenta qué pasó en su caso, y no se reescribe cuando ot
 Entre tres y cinco condiciones por documento, y las entradas en orden por número de issue. Si un documento ya tiene entrada, se actualizan sus condiciones en lugar de añadir otra.
 
 ## Índice
+
+- [feature-1-anadir-fechas-limite-a-las-tareas.md](feature-1-anadir-fechas-limite-a-las-tareas.md): fecha límite obligatoria y editable en las tareas, con etiqueta «Vencida» en la lista
+  - Cuando se trabaje con `models/task.go`, `actions/tasks.go` o las plantillas `templates/tasks/index.plush.html` y `edit.plush.html`
+  - Cuando se modifique la tabla `tasks`, la columna `due_date` o su validación (obligatoria, no pasada al crear)
+  - Cuando se toque `public/assets/app.js` o el toggle de completar/reabrir sin recargar
+  - Cuando se investigue por qué una tarea sale «Vencida» o por qué las tareas antiguas tienen la fecha de la migración

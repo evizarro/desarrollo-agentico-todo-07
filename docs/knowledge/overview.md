@@ -1,6 +1,6 @@
 # Visión general
 
-Una aplicación web con una sola lista de tareas, sin usuarios ni cuentas. Se pueden añadir tareas, editar su título, marcarlas como completadas o reabrirlas y eliminarlas. Lo que hace cada pantalla está en [features/tareas.md](features/tareas.md).
+Una aplicación web con una sola lista de tareas, sin usuarios ni cuentas. Se pueden añadir tareas, editar su título y su fecha límite, marcarlas como completadas o reabrirlas y eliminarlas. Lo que hace cada pantalla está en [features/tareas.md](features/tareas.md).
 
 ## Stack
 
@@ -37,6 +37,7 @@ Una tabla, `tasks`:
 | `id` | uuid | Clave primaria |
 | `title` | string(200) | Obligatorio; hasta 200 caracteres (`models.TitleMaxLength`) |
 | `completed` | bool | `false` por defecto |
+| `due_date` | date | Obligatoria; un día, sin hora. Las tareas que ya existían al añadir la columna reciben el día en que se aplicó la migración |
 | `created_at`, `updated_at` | timestamp | Los pone Pop |
 
 Una migración de datos crea tres tareas de ejemplo, una de ellas completada. Solo las crea si no existen.
@@ -48,7 +49,7 @@ Una migración de datos crea tres tareas de ejemplo, una de ellas completada. So
 | `GET` | `/` | `TasksIndex` | La lista y el formulario para añadir |
 | `POST` | `/tasks` | `TasksCreate` | Crea una tarea |
 | `GET` | `/tasks/{task_id}/edit` | `TasksEdit` | El formulario de edición |
-| `PUT` | `/tasks/{task_id}` | `TasksUpdate` | Cambia el título |
+| `PUT` | `/tasks/{task_id}` | `TasksUpdate` | Cambia el título y la fecha límite |
 | `PUT` | `/tasks/{task_id}/toggle` | `TasksToggle` | Alterna entre completada y pendiente |
 | `DELETE` | `/tasks/{task_id}` | `TasksDestroy` | Elimina la tarea |
 | `GET` | `/healthz` | `HealthCheck` | `200 {"status":"ok"}` si responde la base de datos; si no, `503` |
@@ -61,7 +62,7 @@ Los formularios envían `PUT` y `DELETE` como `POST` con el campo `_method`.
 2. La acción toma la transacción (`c.Value("tx")`), lee la entrada y llama al modelo. `Task.Validate` decide si la entrada es válida.
 3. Si hay errores de validación, la acción vuelve a mostrar el formulario con `422`. Si todo va bien, añade un aviso (flash) y redirige con `303` a `/`.
 4. La pantalla se renderiza dentro de `application.plush.html`, que muestra los avisos pendientes y carga `app.css` y `app.js`.
-5. `app.js` mejora lo que ya funciona sin él: pide confirmación antes de eliminar y cambia el estado de una tarea sin recargar la página.
+5. `app.js` mejora lo que ya funciona sin él: pide confirmación antes de eliminar y cambia el estado de una tarea sin recargar la página, también la etiqueta «Vencida».
 
 ## Configuración
 
